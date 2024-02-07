@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Design Mode Toggle",
+    "name": "Design Mode Switcher",
     "version": "1.0",
-    "description": "Toggle design mode on and off with different icons.",
+    "description": "The Design Mode Switcher is an easy-to-use Chrome extension that lets you edit any website's text with just a click.",
     "action": {
       "default_icon": {
         "16": "images/icon_off.png",

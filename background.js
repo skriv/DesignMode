@@ -1,33 +1,34 @@
-// Инициализация состояния для каждой вкладки
 const tabStates = {};
 
 chrome.action.onClicked.addListener((tab) => {
-  // Переключаем состояние для текущей вкладки
-  const currentState = tabStates[tab.id] || false;
-  const newState = !currentState;
-
-  // Сохраняем новое состояние
-  tabStates[tab.id] = newState;
-
-  // Выполняем скрипт на странице для переключения document.designMode
-  chrome.scripting.executeScript({
-    target: {tabId: tab.id},
-    function: toggleDesignMode,
+    console.log('Action clicked, tab URL:', tab.url);
+    
+    // Ensure we're not attempting to execute on restricted pages
+    if (!tab.url.startsWith('chrome://')) {
+      const currentState = tabStates[tab.id] || false;
+      const newState = !currentState;
+      tabStates[tab.id] = newState;
+  
+      console.log('Toggling design mode for tab:', tab.id, 'New state:', newState);
+  
+      // Execute script on the page to toggle document.designMode
+      chrome.scripting.executeScript({
+        target: {tabId: tab.id},
+        function: toggleDesignMode,
+      }).catch(error => console.error('Failed to execute script:', error));
+  
+      // Update the extension icon based on the new state
+      chrome.action.setIcon({
+        path: newState ? "images/icon_on.png" : "images/icon_off.png",
+        tabId: tab.id,
+      }).catch(error => console.error('Failed to set icon:', error));
+    } else {
+      console.warn('Cannot execute script on chrome:// URLs');
+    }
   });
-
-  // Обновляем иконку в зависимости от нового состояния
-  chrome.action.setIcon({
-    path: newState ? "images/icon_on.png" : "images/icon_off.png",
-    tabId: tab.id,
-  });
-});
-
-function toggleDesignMode() {
-  // Переключаем document.designMode на странице
-  document.designMode = document.designMode === "on" ? "off" : "on";
-}
-
-// Очистка состояния при закрытии вкладки
-chrome.tabs.onRemoved.addListener((tabId) => {
-  delete tabStates[tabId];
-});
+  
+  function toggleDesignMode() {
+    document.designMode = document.designMode === "on" ? "off" : "on";
+    console.log('Document designMode toggled to:', document.designMode);
+  }
+  
