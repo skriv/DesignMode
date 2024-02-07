@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "Design Mode Toggle",
+    "version": "1.0",
+    "description": "Toggle design mode on and off with different icons.",
+    "action": {
+      "default_icon": {
+        "16": "images/icon_off.png",
+        "48": "images/icon_off.png",
+        "128": "images/icon_off.png"
+      },
+      "default_title": "Design Mode Off"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": [
+      "activeTab",
+      "scripting"
+    ],
+    "icons": {
+      "16": "images/icon_off.png",
+      "48": "images/icon_off.png",
+      "128": "images/icon_off.png"
+    }
+  }
+  
