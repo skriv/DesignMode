@@ -31,4 +31,3 @@ chrome.action.onClicked.addListener((tab) => {
     document.designMode = document.designMode === "on" ? "off" : "on";
     console.log('Document designMode toggled to:', document.designMode);
   }
-  
