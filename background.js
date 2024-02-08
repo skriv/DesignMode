@@ -1,5 +1,6 @@
 const tabStates = {};
 
+
 chrome.action.onClicked.addListener((tab) => {
     console.log('Action clicked, tab URL:', tab.url);
     
